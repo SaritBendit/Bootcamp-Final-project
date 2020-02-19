@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <title>Treatments</title>
+    <div>
+        {% for treat in obj_list %}
+            <button>{{ treat.name }}</button>
+        {% endfor %}
+    </div>
+    <div>
+        <form>
+            {{ form }}
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <title>business</title>
+    <div>
+        {% for b in obj_list %}
+            <a href="{%url "core:treatments_page" b.id %}">
+            {{ b.name }}</a>
+{#            {% for treat in b.treatments.all %}#}
+{#                <p>{{ treat.name }}</p>#}
+{#            {% endfor %}#}
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+
+
