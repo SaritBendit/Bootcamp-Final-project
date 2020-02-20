@@ -3,23 +3,18 @@ from django.db import models
 
 class TreatmentType(models.Model):
     name = models.CharField(max_length=200)
-
     # time = models.IntegerField(default=10)
 
     def __str__(self):
         return self.name
 
 # class appoitment(models.Model):
+#     business
 #     date = models.DateTimeField()
 
-class WorkHours(models.Model):
-    hour = models.DateTimeField()
-    def __str__(self):
-        return self.hour
 
 class WorkDay(models.Model):
     day =models.CharField(default="" ,max_length=15)
-    hours = models.ManyToManyField(WorkHours, blank=True)
 
     def __str__(self):
         return self.day
@@ -38,6 +33,9 @@ class Business(models.Model):
     description = models.TextField()
     treatments = models.ManyToManyField(TreatmentType, blank=True)
     days = models.ManyToManyField(WorkDay, blank=True)
+    start_hour = models.TimeField(default="08:00")
+    end_hour = models.TimeField(default="16:00")
+
 
     # full_name = models.CharField(max_length=200)
     # location = models.CharField(max_length=200)

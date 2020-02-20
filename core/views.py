@@ -1,6 +1,10 @@
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.shortcuts import render
 
-from .forms import AForm
+from .forms import AForm, SignUpForm
 from .models import Business, TreatmentType
 from django.template import loader, RequestContext
 from django.http import HttpResponseRedirect
@@ -21,10 +25,35 @@ def treatments_page(request, pk):
     dt = timezone.now()
     dates = []
     for x in range(30):
-        dates.append(dt + datetime.timedelta(days=x))
+        a = dt + datetime.timedelta(days=x)
+        # if a.isoweekday() in [1,2,3]:
+        dates.append(a)
     l = [x.date().strftime('%d/%m/%Y') for x in dates]
     expChoices = [(x, x) for x in l]
-    # experienceYears = Field(max_length=2, choices=expChoices, default=0, blank=True)
-    treatments = TreatmentType.objects.filter(business__id=pk)
-    context = {'obj_list': treatments, 'dates': l, 'form': AForm}
+    treatments_obj = Business.objects.get(id=pk).treatments.all()
+    daysWork_obj = Business.objects.get(id=pk).days.all()
+    context = {'form': AForm(treatments_obj=treatments_obj, expChoices=expChoices)}
     return render(request, 'core/treatments.html', context)
+
+
+# @login_required
+def search(request):
+    return render(request, 'core/search.html')
+
+
+def signup(request):
+    print(request.user.username)
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = User.objects.create(
+                username=data['username'],
+                email=data['email']
+            )
+            user.set_password(data['password'])
+            user.save()
+            login(request, user)
+    else:
+        form = SignUpForm
+    return render(request, 'registration/signup.html', {'form': form})

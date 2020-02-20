@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block search %}
+    <title>Search</title>
+    <div>
+        <form class="search">
+            <label for="treatment">טיפול רצוי
+                <input type="text" id="treatment" name="treatment" value=""></label>
+            <label for="fname">שם בעל העסק
+                <input type="text" id="fname" name="fname" value=""></label>
+            <label for="bname">שם העסק
+                <input type="text" id="bname" name="bname" value=""></label>
+            <label for="location">מיקום
+                <input type="text" id="location" name="location" value=""></label>
+            <button type="submit">חיפוש</button>
+        </form>
+    </div>
+{% endblock search %}
