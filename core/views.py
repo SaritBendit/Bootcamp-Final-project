@@ -26,7 +26,6 @@ class BusinessDetail(DetailView):
     queryset = Business.objects.all()
 
 
-
 def treatments_page(request, pk):
     dt = timezone.now()
     dates = []
@@ -48,10 +47,9 @@ def search(request):
 class SignUpBusinessView(FormView):
     template_name = 'registration/signup_business.html'
     form_class = SignUpBusinessForm
-    success_url = 'core:search'
+    success_url = reverse('core:search')
 
     def form_valid(self, form):
-        if form.is_valid():
             data = form.cleaned_data
             user = User.objects.create(
                 username=data['username'],
@@ -60,18 +58,13 @@ class SignUpBusinessView(FormView):
             )
             user.set_password(data['password'])
             user.save()
-            form.save()
-            # userT.save()
-            login(self, user)
-            return redirect((reverse('search')))
-        else:
-            form = SignUpBusinessForm
-        return render(self, 'registration/signup_business.html', {'form': form})
+            login(self.request, user)
+            return super(SignUpBusinessView, self).form_valid(form)
 
 
 class SignUpClientView(FormView):
-    template_name = 'registration/signup_business.html'
-    form_class = SignUpBusinessForm
+    template_name = 'registration/signup_client.html'
+    form_class = SignUpClientForm
     success_url = 'core:search'
 
     def form_valid(self, form):
@@ -85,13 +78,8 @@ class SignUpClientView(FormView):
             user.set_password(data['password'])
             user.save()
             form.save()
-            # userT.save()
-            login(self, user)
-            return redirect((reverse('search')))
-        else:
-            form = SignUpClientForm
-        return render(self, 'registration/signup_client.html', {'form': form})
-
+            login(self.request, user)
+            return super(SignUpClientView, self).form_valid(form)
 
 def logout(request):
     auth.logout(request)
@@ -100,5 +88,4 @@ def logout(request):
 def admin_page(request):
     if not request.user.is_authenticated():
         return redirect('login')
-
     return render(request, 'core/search.html')

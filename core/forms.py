@@ -24,13 +24,13 @@ class SignUpBusinessForm(forms.ModelForm):
     username = forms.CharField(
         label='User name',
         max_length=200, widget=forms.TextInput(attrs={'class': 'from-control'}))
-    name = forms.CharField(max_length=100)
+    first_name = forms.CharField(label='first_name',max_length=100)
     email = forms.EmailField(label='Email', max_length=200)
     password = forms.CharField(label='Password', max_length=200, widget=forms.PasswordInput)
 
     class Meta:
         model= Business
-        fields = ['username','name','email','password','phone','location','description','treatments','days','start_hour','end_hour']
+        fields = ['username','first_name','email','password','phone','location','description','treatments','days','start_hour','end_hour']
         widgets = {
             'start_hour' : forms.Select(
                 attrs={'class': 'from-control'},
@@ -43,10 +43,10 @@ class SignUpClientForm(forms.ModelForm):
     username = forms.CharField(
         label='User name',
         max_length=200, widget=forms.TextInput(attrs={'class': 'from-control'}))
-    name = forms.CharField(max_length=100)
+    first_name = forms.CharField(max_length=100)
     email = forms.EmailField(label='Email', max_length=200)
     password = forms.CharField(label='Password', max_length=200, widget=forms.PasswordInput)
 
     class Meta:
         model= Client
-        fields = ['username','name','email','password','phone','location']
+        fields = ['username','first_name','email','password','phone','location']
