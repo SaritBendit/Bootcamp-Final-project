@@ -37,20 +37,20 @@ class Business(models.Model):
 
 
 class Client(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='client')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='client')
     location = models.CharField(max_length=200)
     phone = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
-class appointment(models.Model):
+class Appointment(models.Model):
     business = models.ForeignKey(Business,on_delete=models.CASCADE,related_name='appointment')
-    client = models.OneToOneField(Client,on_delete=models.CASCADE,related_name='appointment')
-    treatment = models.OneToOneField(TreatmentType,on_delete=models.CASCADE)
-    day = models.DateTimeField(default="")
+    client = models.ForeignKey(Client,on_delete=models.CASCADE,related_name='appointment')
+    treatment = models.ForeignKey(TreatmentType,on_delete=models.CASCADE)
+    day = models.DateTimeField(null=True)
     time = models.TimeField(default="08:00")
-    # date = models.OneToOneField(Business.days,on_delete=models.CASCADE,primary_key=True,)
+
 
     def __str__(self):
-        return self.business , self.client
+        return self.business.user.name , self.client.user.name

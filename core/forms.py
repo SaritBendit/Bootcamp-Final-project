@@ -1,11 +1,6 @@
 import datetime
-
 from django import forms
-from django.utils import timezone
-from phone_field import PhoneField
-
 from core.models import TreatmentType, WorkDay, Business, Client
-
 
 class AForm(forms.Form):
     # experienceYears = Field(max_length=2, choices=expChoices, default=0, blank=True)
@@ -38,15 +33,14 @@ class SignUpBusinessForm(forms.ModelForm):
             'end_hour': forms.Select(choices=((f'{x}:00', f'{x}:00') for x in range(6, 24)))
         }
 
-
-class SignUpClientForm(forms.ModelForm):
+class SignUpClientForm(forms.Form):
     username = forms.CharField(
         label='User name',
         max_length=200, widget=forms.TextInput(attrs={'class': 'from-control'}))
     first_name = forms.CharField(max_length=100)
     email = forms.EmailField(label='Email', max_length=200)
     password = forms.CharField(label='Password', max_length=200, widget=forms.PasswordInput)
+    location = forms.CharField(label='Location', max_length=200)
+    phone = forms.CharField(label='Phone', max_length=200)
 
-    class Meta:
-        model= Client
-        fields = ['username','first_name','email','password','phone','location']
+
