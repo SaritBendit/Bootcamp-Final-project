@@ -13,10 +13,21 @@ class TreatmentType(models.Model):
 
 
 class WorkDay(models.Model):
+    daychoices = (
+        (7, 'Sunday'),
+        (1, 'Monday'),
+        (2, 'Tuesday'),
+        (3, 'Wednesday'),
+        (4, 'Thursday'),
+        (5, 'Friday'),
+        (6, 'Saturday'),
+    )
     day = models.CharField(default="" ,max_length=15)
+    # day_int = models.IntegerField(blank=True, null=True, choices=daychoices)
 
     def __str__(self):
         return self.day
+        # return self.get_day_int_display()
 
 
 class Business(models.Model):
@@ -33,7 +44,7 @@ class Business(models.Model):
         return self.user.username
 
     def get_absolute_url(self):
-        return reverse('core:business-detail',kwargs={'pk':self.pk})
+        return reverse('core:business_detail',kwargs={'pk':self.pk})
 
 
 class Client(models.Model):
@@ -45,12 +56,14 @@ class Client(models.Model):
         return self.user.username
 
 class Appointment(models.Model):
-    business = models.ForeignKey(Business,on_delete=models.CASCADE,related_name='appointment')
-    client = models.ForeignKey(Client,on_delete=models.CASCADE,related_name='appointment')
+    business = models.ForeignKey(Business,on_delete=models.CASCADE,related_name='appointments')
+    client = models.ForeignKey(Client,on_delete=models.CASCADE,related_name='appointments')
     treatment = models.ForeignKey(TreatmentType,on_delete=models.CASCADE)
-    day = models.DateTimeField(null=True)
+    day = models.DateField()
     time = models.TimeField(default="08:00")
 
+    def get_absolute_url(self):
+        return reverse('core:appointment-form',kwargs={'pk':self.pk})
 
-    def __str__(self):
-        return self.business.user.name , self.client.user.name
+    # def __str__(self):
+    #     return self.business.user.username , self.client.user.username

@@ -2,19 +2,34 @@
 {% block content %}
     <title>business</title>
     <div>
-{#    #}
-{#        {% for b in obj_list %}#}
-{#            <a href="{%url "core:treatments_page" b.id %}">#}
-{#            {{ b.name }}</a>#}
-{#            {% for treat in b.treatments.all %}#}
-{#                <p>{{ treat.name }}</p>#}
-{#            {% endfor %}#}
 
-        {% for busines in object_list %}
-            <a href="{{ busines.get_absolute_url }}">{{busines.name}}</a>
-            <h2>{{ busines.name }}</h2>
+        <table>
 
-        {% endfor %}
+            <th>Business name</th>
+            <th>Treatments</th>
+            <th>Work Days</th>
+            <th>Work Hours</th>
+
+            {% for business in object_list %}
+                <tr>
+                    <td><a href="{{ business.get_absolute_url }}">{{ business.user.username }}</a></td>
+                    <td>
+                        {% for treat in business.treatments.all %}
+                            <p>{{ treat.name }}</p>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for day in business.days.all %}
+                            <p>{{ day.day }}</p>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <p>{{ business.start_hour }}-{{ business.end_hour }}</p>
+                    </td>
+                </tr>
+
+                </table>
+            {% endfor %}
     </div>
 {% endblock content %}
 

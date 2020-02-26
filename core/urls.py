@@ -1,17 +1,17 @@
 from django.urls import path
 from . import views
 
-from .views import BusinessList, BusinessDetail, SignUpClientView, SignUpBusinessView
+from .views import BusinessList, BusinessDetail, SignUpClientView, SignUpBusinessView, AppointmentView
 
 app_name = "core"
 
 urlpatterns = [
     path('', views.search, name="search"),
-    path('business-list/', BusinessList.as_view(), name="business-list"),
-    path('<int:pk>/', BusinessDetail.as_view(), name="business-detail"),
-    path('business-signup/', SignUpBusinessView.as_view(), name="business-create"),
-    path('client-signup/', SignUpClientView.as_view(), name="client-create"),
-    path('appointment/', AppointmentView.as_view(), name="appointment-create"),
+    path('business-list/', BusinessList.as_view(), name="business_list"),
+    path('<int:pk>/', BusinessDetail.as_view(), name="business_detail"),
+    path('business-signup/', SignUpBusinessView.as_view(), name="business_form"),
+    path('client-signup/', SignUpClientView.as_view(), name="client_create"),
+    path('<int:business_id>/appointment/<int:treat_id>', AppointmentView.as_view(), name="appointment_form"),
 
     # path('treatments/<int:pk>/', views.treatments_page, name="treatments_page"),
 ]

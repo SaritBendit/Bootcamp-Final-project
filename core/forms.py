@@ -44,3 +44,16 @@ class SignUpClientForm(forms.Form):
     phone = forms.CharField(label='Phone', max_length=200)
 
 
+class AppointmentForm(forms.Form):
+    treatments = forms.ChoiceField(label='treatments', widget=forms.RadioSelect)
+    dates = forms.ChoiceField(label='choose date')
+    hours = forms.ChoiceField(label='choose hour')
+
+    def __init__(self, *args, **kwargs):
+        self.treatments_obj = kwargs.pop('treatments_obj', None)
+        self.expChoices = kwargs.pop('expChoices', None)
+        self.hours = kwargs.pop('hours',None)
+        super().__init__(*args, **kwargs)
+        self.fields['treatments'].choices = ((t.id, t.name) for t in self.treatments_obj)
+        self.fields['dates'].choices = self.expChoices
+        self.fields['hours'].choices = self.hours
