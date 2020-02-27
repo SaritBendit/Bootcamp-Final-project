@@ -1,37 +1,35 @@
 {% extends 'core/base.html' %}
 {% block content %}
-    <title>business</title>
-    <div>
+<title>business</title>
 
-        <table>
-
-            <th>Business name</th>
-            <th>Treatments</th>
-            <th>Work Days</th>
-            <th>Work Hours</th>
-
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Business</th>
+                <th scope="col">Treatments</th>
+                <th scope="col">Work Days</th>
+                <th scope="col">Work Hours</th>
+            </tr>
+            </thead>
+            <tbody>
             {% for business in object_list %}
                 <tr>
-                    <td><a href="{{ business.get_absolute_url }}">{{ business.user.username }}</a></td>
-                    <td>
-                        {% for treat in business.treatments.all %}
-                            <p>{{ treat.name }}</p>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {% for day in business.days.all %}
-                            <p>{{ day.day }}</p>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        <p>{{ business.start_hour }}-{{ business.end_hour }}</p>
-                    </td>
-                </tr>
-
-                </table>
+                <td><a href="{{ business.get_absolute_url }}">{{ business.user.username }}</a>
+                </td>
+                <td>{% for treat in business.treatments.all %}
+                    <p>{{ treat.name }}</p>
+                {% endfor %}
+                </td>
+                <td>{% for day in business.days.all %}
+                    <p>{{ day.day }}</p>
+                {% endfor %}
+                </td>
+                <td>
+                    <p>{{ business.start_hour }}-{{ business.end_hour }}</p>
+                </td>
             {% endfor %}
-    </div>
+            </tr>
+
+            </tbody>
+        </table>
 {% endblock content %}
-
-
-

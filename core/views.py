@@ -14,7 +14,6 @@ import datetime
 class BusinessList(ListView):
     template_name = 'core/business.html'
     model = Business
-    # queryset = Business.objects.all()
     def get_queryset(self):
         qs = super().get_queryset()
         treatment = self.request.GET.get('treatment')
@@ -22,13 +21,13 @@ class BusinessList(ListView):
         bname = self.request.GET.get('bname')
         location = self.request.GET.get('location')
         if treatment:
-            qs = qs.filter(treatments=treatment)
+            qs = qs.filter(treatments__name__icontains=treatment)
         if fname:
             qs = qs.filter(user__first_name__icontains=fname)
         if bname:
             qs = qs.filter(user__name__icontains=bname)
         if location:
-            qs = qs.filter(location=location)
+            qs = qs.filter(location__icontains=location)
 
         return qs
 
@@ -46,19 +45,6 @@ class BusinessDetail(DetailView):
         return context
 
 
-# def treatments_page(request, pk):
-#     dt = timezone.now()
-#     dates = []
-#     for x in range(30):
-#         a = dt + datetime.timedelta(days=x)
-#         dates.append(a)
-#     l = [x.date().strftime('%d/%m/%Y') for x in dates]
-#     expChoices = [(x, x) for x in l]
-#     treatments_obj = Business.objects.get(id=pk).treatments.all()
-#     daysWork_obj = Business.objects.get(id=pk).days.all()
-#     context = {'form': AForm(treatments_obj=treatments_obj, expChoices=expChoices)}
-#     return render(request, 'core/busines_detail.html', context)
-#
 
 def search(request):
     return render(request, 'core/search.html')
@@ -127,7 +113,7 @@ class SignUpClientView(NoneLoginPermitted, FormView):
         return super(SignUpClientView, self).form_valid(form)
 
 
-class AppointmentView(FormView):
+class AppointmentView(LoginRequiredMixin, FormView):
     template_name = 'core/appointment.html'
     form_class = AppointmentForm
     success_url = reverse_lazy('core:search')
@@ -193,12 +179,4 @@ class AppointmentView(FormView):
         )
         return super(AppointmentView, self).form_valid(form)
 
-# def logout(request):
-#     auth.logout(request)
-#     return render(request, 'core/search.html')
-#
-#
-# def admin_page(request):
-#     if not request.user.is_authenticated():
-#         return redirect('login')
-#     return render(request, 'core/search.html')
+

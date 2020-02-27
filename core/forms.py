@@ -1,6 +1,6 @@
 import datetime
 from django import forms
-from core.models import TreatmentType, WorkDay, Business, Client
+from core.models import  Business
 
 class AForm(forms.Form):
     # experienceYears = Field(max_length=2, choices=expChoices, default=0, blank=True)
@@ -17,9 +17,9 @@ class AForm(forms.Form):
 
 class SignUpBusinessForm(forms.ModelForm):
     username = forms.CharField(
-        label='User name',
+        label='Business name',
         max_length=200, widget=forms.TextInput(attrs={'class': 'from-control'}))
-    first_name = forms.CharField(label='first_name',max_length=100)
+    first_name = forms.CharField(label='Full name',max_length=100)
     email = forms.EmailField(label='Email', max_length=200)
     password = forms.CharField(label='Password', max_length=200, widget=forms.PasswordInput)
 

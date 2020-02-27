@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <div class="jumbotron text-center">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-login">SUBMIT</button>
+            <a class="btn btn-signup " href="{% url 'core:business_form' %}">SIGNUP as a business </a>
+            <a class="btn btn-signup" href="{% url 'core:client_create' %}">SIGNUP as a client</a>
+        </form>
+    </div>
+{% endblock %}

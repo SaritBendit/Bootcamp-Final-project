@@ -1,8 +1,29 @@
 body {
-    background-color: #f1c0c2;
+    background-color: #E6A993;
+    font-family: 'Oleo Script';
+    padding: 0;
+    margin: 0;
+
+}
+
+.btn-success:hover {
+    background-color: #E6A993;
+    color: black;
+    border: #E6A993;
+
+}
+
+label {
+    /*font-size: 4vw;*/
+}
+
+#id_treatment > label {
+    font-size: 2vw;
+
 }
 
 .search {
+    font-size: 2vw;
     margin: 10px;
     display: flex;
     align-items: center;
@@ -14,17 +35,40 @@ body {
     background-image: url(img/2.jpg);
     background-position: center;
     background-repeat: no-repeat;
-    /*background-size: cover;*/
 }
-.content{
+
+.content {
     min-height: calc(100vh - 57px);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
+
+ul {
+    list-style: none;
+}
+
 label {
-    width: 30vw
+    width: 30vw;
+    font-size: 2.1vw;
+}
+
+.jumbotron {
+    background-color: #805E52;
+    color: #fff;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.53);
+
+}
+
+.table-hover {
+    background-image: url(img/3.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.description {
+    background-image: url("img/3.jpg");
 }
 
 input[type=text],
@@ -40,6 +84,17 @@ select {
 }
 
 input[type=text]:focus,
-select:focus{
+select:focus {
     border: 3px solid burlywood;
+}
+
+.white {
+    color: white;
+    /*text-decoration: line-through;*/
+}
+
+.btn {
+    border: #402F29;
+    background-color: #402F29;
+    color: #FFBCA3;
 }

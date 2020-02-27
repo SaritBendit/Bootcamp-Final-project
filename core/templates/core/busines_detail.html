@@ -2,13 +2,15 @@
 {% block content %}
     <title>Treatments</title>
 
-    <div>
-        <h1>{{ object.name }}</h1>
-        <h2>{{ object.description }}</h2>
+    <div class="jumbotron text-center">
+        <h1>{{ object.description }}</h1>
+        <h3>By {{ object.user.first_name }}</h3>
         {% for treat in object.treatments.all %}
-            <a href="{% url 'core:appointment_form' object.id treat.id %}">go</a>
             <p>{{ treat.name }}</p>
         {% endfor %}
-
+        <a href="{% url 'core:appointment_form' object.id %}">Make an appointment</a>
     </div>
 {% endblock content %}
+{%  block scripts %}
+
+{% endblock %}

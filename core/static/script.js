@@ -1,60 +1,41 @@
 const chooseDate = (e) => {
     const date = e.target.value;
+    console.log(date)
     const hoursEl = document.getElementById("hoursUsed");
-    console.log("hi", hoursEl)
-
-    if (hoursEl) {
+    if (hoursEl !== null) {
         const usedHours = JSON.parse(hoursEl.textContent);
-        if (usedHours[1] === date) {
-            console.log("date=  " + date);
-            console.log("date=  " + usedHours[1]);
 
-            console.log(usedHours);
-            const el = document.getElementById("id_hours");
-            const allHours = [...el];
-            const freeHours = [];
-            for (element of usedHours) {
-                if (element[1] === date) {
-                    for (let i = 0; i < allHours.length; i++) {
-                        let hourIsUsed = false;
-                        for (let j = 0; j < usedHours.length; j++) {
-                            if (allHours[i].text === usedHours[j]) {
-                                console.log("Hour is used", allHours[i].text);
-                                hourIsUsed = true;
-                                break;
-                            }
-                        }
-                        if (hourIsUsed === false) {
-                            freeHours.push(allHours[i].text)
-                        }
-                    }
+        const el = document.getElementById("id_hours");
+        const allHours = [...el];
 
-                }
+        const freeHours = [];
+
+        const usedPerDay = [];
+        for (used of usedHours){
+            if (used[0] === date){
+                usedPerDay.push(used[1])
             }
-            return freeHours
         }
-
-
+        const allH = document.querySelector('#id_hours').getElementsByTagName("option");
+        for (hour of allHours){
+            if (usedPerDay.includes(hour.text)){
+                hour.disabled = true;
+                hour.classList.add('white')
+            }
+            else{
+                console.log(typeof (hour.text))
+                console.log(hour.text , usedPerDay)
+            }
+        }
+        console.log(freeHours);
+        return freeHours
     }
-
-
-    // const x = hours.filter(item => {
-    //     return !item.text.includes("9:00")
-    // });
-    //
-    // console.log(x);
-
-
-//     var option = document.createElement("option");
-// option.text = "Text";
-// option.value = "myvalue";
-// var select = document.getElementById("id-to-my-select-box");
-// select.appendChild(option);
-
 
 };
 
 // document.getElementById('id_dates').addEventListener("click",chooseDate);
 
 document.getElementById("id_dates").addEventListener("click", chooseDate);
+
+
 
