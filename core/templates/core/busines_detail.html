@@ -1,16 +1,21 @@
 {% extends 'core/base.html' %}
-{% block content %}
+{% block business %}
     <title>Treatments</title>
 
     <div class="jumbotron text-center">
-        <h1>{{ object.description }}</h1>
-        <h3>By {{ object.user.first_name }}</h3>
+    <div class = "head">
+        <p>{{ object.description }}</p>
+        <p>By {{ object.user.first_name }}</p>
+    </div>
+    <div style="font-size: 2.5vh">
+        <p><u>You can find here:</u></p>
         {% for treat in object.treatments.all %}
             <p>{{ treat.name }}</p>
         {% endfor %}
-        <a href="{% url 'core:appointment_form' object.id %}">Make an appointment</a>
+        <a class="btn" href="{% url 'core:appointment_form' object.id %}">Make an appointment</a>
     </div>
-{% endblock content %}
-{%  block scripts %}
+    </div>
+{% endblock business %}
+{% block scripts %}
 
 {% endblock %}

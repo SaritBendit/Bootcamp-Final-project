@@ -9,6 +9,7 @@
                 <th scope="col">Treatments</th>
                 <th scope="col">Work Days</th>
                 <th scope="col">Work Hours</th>
+                <th scope="col">Location</th>
             </tr>
             </thead>
             <tbody>
@@ -26,6 +27,9 @@
                 </td>
                 <td>
                     <p>{{ business.start_hour }}-{{ business.end_hour }}</p>
+                </td>
+                                <td>
+                    <p>{{ business.location }}</p>
                 </td>
             {% endfor %}
             </tr>

@@ -22,6 +22,7 @@ label {
 
 }
 
+
 .search {
     font-size: 2vw;
     margin: 10px;
@@ -30,11 +31,18 @@ label {
     justify-content: center;
     text-align: center;
     flex-direction: column;
-    height: 85vh;
+    height: 90vh;
     width: 90vw;
     background-image: url(img/2.jpg);
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.search div {
+    color: white;
+    background-color: rgba(128, 94, 82, 0.6);
+    font-size: 2vw;
+
 }
 
 .content {
@@ -50,7 +58,7 @@ ul {
 }
 
 label {
-    width: 30vw;
+    width: 25vw;
     font-size: 2.1vw;
 }
 
@@ -58,17 +66,21 @@ label {
     background-color: #805E52;
     color: #fff;
     box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.53);
-
+    height: 100%;
+    width: auto;
 }
-
+.head{
+    font-size: 3vw;
+    text-align: start;
+}
 .table-hover {
-    background-image: url(img/3.jpg);
+    /*background-image: url(img/3.jpg);*/
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .description {
-    background-image: url("img/3.jpg");
+    /*background-image: url("img/3.jpg");*/
 }
 
 input[type=text],
@@ -77,10 +89,11 @@ select {
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-    border: 3px solid #ccc;
+    border: 3px solid #402F29;
     -webkit-transition: 0.5s;
     transition: 0.5s;
     outline: none;
+
 }
 
 input[type=text]:focus,
@@ -97,4 +110,5 @@ select:focus {
     border: #402F29;
     background-color: #402F29;
     color: #FFBCA3;
+    font-size: 2vw;
 }

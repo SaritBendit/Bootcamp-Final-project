@@ -1,16 +1,16 @@
 {% extends 'core/base.html' %}
 {% block search %}
     <title>Search</title>
-    <div>
+    <div style="position: fixed">
         <form class="search" action="{% url 'core:business_list' %}">
 
-            <label for="treatment">Treatment
+            <label for="treatment"><div>Treatment</div>
                 <input type="text" id="treatment" name="treatment" value=""></label>
-            <label for="fname">Business owner name
+            <label for="fname"><div>Business owner name</div>
                 <input type="text" id="fname" name="fname" value=""></label>
-            <label for="bname">Business name
+            <label for="bname"><div>Business name</div>
                 <input type="text" id="bname" name="bname" value=""></label>
-            <label for="location">Location
+            <label for="location"><div>Location</div>
                 <input type="text" id="location" name="location" value=""></label>
             <button class="btn" type="submit">Search</button>
         </form>

@@ -1,8 +1,9 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import AccessMixin, LoginRequiredMixin
-from django.http import Http404
-from django.views.generic import ListView, DetailView, FormView
+from django.db.models import Q
+from django.http import Http404, HttpResponseRedirect
+from django.views.generic import ListView, DetailView, FormView, TemplateView
 from .forms import AForm, SignUpBusinessForm, SignUpClientForm, AppointmentForm
 from .models import Business, TreatmentType, User, Client, Appointment
 from django.shortcuts import get_object_or_404, render, redirect
@@ -113,10 +114,17 @@ class SignUpClientView(NoneLoginPermitted, FormView):
         return super(SignUpClientView, self).form_valid(form)
 
 
-class AppointmentView(LoginRequiredMixin, FormView):
+class AppointmentView(FormView):
     template_name = 'core/appointment.html'
     form_class = AppointmentForm
     success_url = reverse_lazy('core:search')
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            if Client.objects.filter(user=self.request.user):
+                return super().dispatch(request, *args, **kwargs)
+            raise Http404
+        return HttpResponseRedirect(reverse_lazy('login'))
 
     def hours(self):
         bid = self.kwargs['business_id']
@@ -163,7 +171,7 @@ class AppointmentView(LoginRequiredMixin, FormView):
     def form_valid(self, form):
         data = form.cleaned_data
         business_id = self.kwargs['business_id']
-        treat_id = self.kwargs['treat_id']
+        # treat_id = self.kwargs['treatments']
         treatment_id = data['treatments']
         user = self.request.user
         date_input =  data['dates']
@@ -179,4 +187,13 @@ class AppointmentView(LoginRequiredMixin, FormView):
         )
         return super(AppointmentView, self).form_valid(form)
 
+class DiaryView(LoginRequiredMixin, TemplateView):
+    template_name = 'core/diary.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['appointments'] = Appointment.objects.filter(
+            Q(business__user=self.request.user) |
+            Q(client__user=self.request.user)
+        )
+        return context

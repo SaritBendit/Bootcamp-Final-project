@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% block content %}
+    <title>Diary</title>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col"> Business/Client</th>
+            <th scope="col"> Treatments</th>
+            <th scope="col"> Day</th>
+            <th scope="col"> Hour</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for a in appointments %}
+            {% if a.client %}
+            <tr>
+                <td><p>{{ a.client.user.username }}</p>
+                </td>
+                <td><p>{{ a.treatment }}</p>
+                </td>
+                <td><p>{{ a.day }}</p>
+                </td>
+                <td>
+                    <p>{{ a.time }}</p>
+                </td>
+
+            </tr>
+            {% else %}
+            <tr>
+                <td><a href="{{ a.get_absolute_url }}"> {{ a.business.username }}</a>
+                </td>
+                <td><p>{{ a.treatment }}</p>
+                </td>
+                <td><p>{{ a.day }}</p>
+                </td>
+                <td>
+                    <p>{{ a.time }}</p>
+                </td>
+
+            </tr>
+            {% endif %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock content %}

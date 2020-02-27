@@ -63,7 +63,6 @@ class Appointment(models.Model):
     time = models.TimeField(default="08:00")
 
     def get_absolute_url(self):
-        return reverse('core:appointment-form',kwargs={'pk':self.pk})
+        return reverse('core:appointment_form',kwargs={'business_id':self.business_id})
 
-    # def __str__(self):
-    #     return self.business.user.username , self.client.user.username
+
